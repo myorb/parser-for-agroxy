@@ -2,13 +2,16 @@
 <html>
 <head>
 <meta charset="utf-8">
-    <title>lal</title>
+    <title>rxstars Zero Step</title>
 </head>
 <body>
 
 <?php
 ini_set('display_errors',1);
 ini_set('display_startup_errors',1);
+ini_set('display_errors',1);
+ini_set('display_startup_errors',1);
+error_reporting(-1);
 # Setting time and memory limits
 ini_set('max_execution_time',0);
 ini_set('memory_limit', '128M');
@@ -41,13 +44,13 @@ $content = array();
 
 $file = 'file.txt';
 
-$domian = 'http://www.pharmacyreviewer.com';
-$pagesUrls = 'http://www.pharmacyreviewer.com/reviews/all-online-pharmacies/Page-';
+$domian = 'https://www.rxstars.net/';
+$pagesUrl = 'category/reviews/page/';
+$totalPages = 119;
 $itemUrls = array();
 
-
-for($i=2;$i<49;$i++)
-   $AC->get('http://www.pharmacyreviewer.com/reviews/all-online-pharmacies/Page-'.$i);
+for($i=1;$i<$totalPages;$i++)
+   $AC->get($domian.$pagesUrl.$i);
 
 $AC->execute(5);
 
@@ -58,7 +61,7 @@ function callback_function($response, $info, $request)
     global $domian;
 
 if($info['http_code']!==200)
-    {   
+    {
         AngryCurl::add_debug_msg(
             "->\t" .
             $request->options[CURLOPT_PROXY] .
@@ -75,8 +78,8 @@ if($info['http_code']!==200)
                     // $content[] = $div;
             //   var_dump($div->innertext);
             //}
-            foreach($html->find('.jrContentTitle a') as $el){
-                $itemUrls[] = $domian.$el->href;
+            foreach($html->find('.read-more a') as $el){
+                $itemUrls[] = $el->href;
                 var_dump( $el->href);
             }
 // 	   if(count($content) == 500){
@@ -84,9 +87,9 @@ if($info['http_code']!==200)
 // 		$array = array_map ("rtrim", $content);
 // 		$str = implode ("\n", $array);
 // 		file_put_contents ("file.txt", $str);
-// //end... if more then 500 rows 
+// //end... if more then 500 rows
 //  		die('all done');
-		// }	
+		// }
 	}
 }
 echo "<pre> total ";

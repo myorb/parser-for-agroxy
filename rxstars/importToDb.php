@@ -16,12 +16,12 @@ if ($handle) {
     fclose($handle);
 } else {
     // error opening the file.
-} 
+}
 // var_dump($items);
 foreach ($items as $key => $value) {
 	$item = json_decode($value);
 	// var_dump(json_decode($value));
-var_dump($item->title);
+var_dump($item->Pharmacy->title);
 	# code...
 }
 // var_dump(json_decode($items));
